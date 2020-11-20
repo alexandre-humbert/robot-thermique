@@ -1,0 +1,32 @@
+/ {
+	am33xx_pinmux: pinmux@44e10800 
+	{
+		pinctrl-names = "default";
+		i2c2_pins: pinmux_i2c2_pins 
+		{
+			pinctrl-single,pins = <0x178 0x73 0x17c 0x73>;
+		};
+		uart1_pins: pinmux_uart1_pins 
+			{
+				pinctrl-single,pins = <
+				0x180 (PIN_INPUT_PULLUP | MUX_MODE4) /*uart1 Rx : pin 26*/
+				0x184 (PIN_OUTPUT_PULLDOWN | MUX_MODE4) /*uart1 Tx : pin 24*/
+				>;
+			};
+	};
+	ocp {
+		i2c2: i2c@4819c000 
+		{
+			pinctrl-names = "default";
+			pinctrl-0 = <&i2c2_pins>;
+			status = "okay";
+		};
+
+		uart1: serial@48022000
+		{
+			pinctrl-names = "default";
+			pinctrl-0 = <&uart1_pins>;
+			status = "okay";
+		};
+	} ;
+} ;
