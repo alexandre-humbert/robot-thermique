@@ -9,8 +9,8 @@
 		uart1_pins: pinmux_uart1_pins 
 			{
 				pinctrl-single,pins = <
-				0x180 (PIN_INPUT_PULLUP | MUX_MODE4) /*uart1 Rx : pin 26*/
-				0x184 (PIN_OUTPUT_PULLDOWN | MUX_MODE4) /*uart1 Tx : pin 24*/
+				0x180 (PIN_INPUT_PULLUP | MUX_MODE0) /*uart1 Rx : pin 26*/
+				0x184 (PIN_OUTPUT_PULLDOWN | MUX_MODE0) /*uart1 Tx : pin 24*/
 				>;
 			};
 	};
