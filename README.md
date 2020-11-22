@@ -2,7 +2,7 @@
 ## Description
 Le robot doit suivre une personne grâce à un capteur thermique.
 ## Liste des choses à faire:
-  -[x] Machine virtuelle avec Buildroot et boot NFS
+  - [x] Machine virtuelle avec Buildroot et boot NFS
   -[x] Liaison UART entre la carte beagle Bone et la carte Teensy
   -[ ] Acquérir une image de la matrice thermique et l'afficher
   -[ ] Déterminer l'objet la position de l'objet le plus chaud sur une image.
