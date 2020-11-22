@@ -1,5 +1,5 @@
 ## Description
-Ce programme en langage C permet au robot de suivre une personne avec une matrice thermique.
+Ce programme en langage C permet au robot de suivre une personne avec une matrice thermique.  
 Il est composé de 4 classes : 
   * La classe moteur
   * la classe camera
@@ -16,5 +16,5 @@ Il est composé de 4 classes :
   Elle contient le code pour mesurer une distance avec le capteur à ultrason
   
   ## La classe robot
-  Elle contient un objet de chacune des classes. 
+  Elle contient un objet de chacune des classes.  
   Elle permet de piloter le robot en fonction des données des capteurs.
