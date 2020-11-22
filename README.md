@@ -12,7 +12,7 @@ Le robot doit suivre une personne grâce à un capteur thermique.
   - [ ] Le robot uutilise plusieurs capteurs pour un meilleur suivi
   
   ## Matériel
-   * Une carte beagleBone Black
+   * Une carte BeagleBone Black
    * Un robot motorisé avec sa carte d'interface moteurs (Teensy 3.1)
    * Un capteur infrarouge Grid-Eye Panasonic
    * Un capteur à ultrasons SRF08
