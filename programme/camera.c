@@ -32,4 +32,4 @@ main()
 	if (flag != 2) { perror("Read Error I2C_Byte"); }
 	printf(" MSByte= %x LSByte=%x\n", I2C_RD_Buf[0], I2C_RD_Buf[1]);
 	close(i2cFile);
-}
+}
