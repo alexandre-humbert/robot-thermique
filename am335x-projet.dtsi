@@ -6,6 +6,11 @@
 		{
 			pinctrl-single,pins = <0x178 0x73 0x17c 0x73>;
 		};
+		
+		i2c1_pins: pinmux_i2c1_pins 
+		{
+			pinctrl-single,pins = <0x154 0x72 0x15c 0x72>;
+		};
 		uart1_pins: pinmux_uart1_pins 
 			{
 				pinctrl-single,pins = <
@@ -21,7 +26,13 @@
 			pinctrl-0 = <&i2c2_pins>;
 			status = "okay";
 		};
-
+		
+		i2c1: i2c@4802aa000 
+		{
+			pinctrl-names = "default";
+			pinctrl-0 = <&i2c1_pins>;
+			status = "okay";
+		};
 		uart1: serial@48022000
 		{
 			pinctrl-names = "default";
