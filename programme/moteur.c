@@ -8,17 +8,20 @@ main() {
 	FILE* uart;
 	
 	uart = fopen("/dev/ttyO1", "w");
-	fprintf(uart, "av/n");
+	fprintf(uart, "av\n");
 	fclose(uart);
-	sleep(5);
+	sleep(4);
 	uart = fopen("/dev/ttyO1", "w");
-	fprintf(uart, "st/n");
+	fprintf(uart, "st\n");
 	fclose(uart);
 
-	sleep(2);
+	sleep(1);
 	uart = fopen("/dev/ttyO1", "w");
-	fprintf(uart, "ar/n");
+	fprintf(uart, "bw\n");
 	fclose(uart);
-	sleep(5);
+	sleep(4);
+	uart = fopen("/dev/ttyO1", "w");
+	fprintf(uart, "st\n");
+	fclose(uart);
 
 }
