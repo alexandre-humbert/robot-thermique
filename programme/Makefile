@@ -23,5 +23,5 @@ camera:	camera.c
 ultrason:	ultrason.c
 	$(CC) -o ultrason ultrason.c
 
-ultrason:	interface.c
+interface:	interface.c
 	$(CC) -o interface interface.c
