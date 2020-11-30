@@ -13,7 +13,7 @@
 #define TAILLE_TEMP_SUM 8
 
 main()
-{sleep(3);
+{sleep(0);
 	int i2cFile;
 	int flag, value;
 	unsigned char I2C_WR_Buf[MAX_BUFF_SIZE]; // Contains sent data
@@ -80,6 +80,43 @@ if(val_max_temp>26)
 {
     printf("Il y a un objet chaud devant moi.");
 }
-printf("L'indice de la colonne la plus chaude est %d, valeur = %f \n", max_temp, val_max_temp);
 
+printf("L'indice de la colonne la plus chaude est %i, valeur = %f \n", max_temp, val_max_temp);
+// Trouver la temperature minimale et la temperature maximale.
+float max, min,p1,p2,p3;
+min = (float)I2C_RD_Buf[0];
+max = (float)I2C_RD_Buf[0];
+
+for (i=0;i<128;i+=2){
+  if ((float)I2C_RD_Buf[i] > max){
+  max = (float)I2C_RD_Buf[i];
+  }
+  if ((float)I2C_RD_Buf[i] < min){
+  min = (float)I2C_RD_Buf[i];
+  }
+}
+p1 = min + (max -min)/4;
+p2 = min + (max -min)/2;
+p3 = min + 3*(max -min)/4;
+// Generer une image
+FILE* fp;
+int bleu, vert, rouge;
+int x,y;
+x=0;
+y=0;
+fp = fopen("/var/www/img.svg", "w");
+fprintf(fp, "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 8 8\">\n");
+for (i=0;i<128;i+=2){
+// Choix couleur
+if ((float)I2C_RD_Buf[i] >= min && (float)I2C_RD_Buf[i] < p1){rouge=0; vert=(int)(((float)I2C_RD_Buf[i]-min)*4/((max-min)*255)); bleu=255;}
+if ((float)I2C_RD_Buf[i] >= p1 && (float)I2C_RD_Buf[i] < p2){rouge=0; vert=255; bleu=255 - (int)(((float)I2C_RD_Buf[i]-p1)*4/((max-min))*255);}
+if ((float)I2C_RD_Buf[i] >= p2 && (float)I2C_RD_Buf[i] < p3){rouge= (int)(((float)I2C_RD_Buf[i]-p2)*4/((max-min))*255); vert=255; bleu=0;}
+if ((float)I2C_RD_Buf[i] >= p3){rouge=255 ; vert=255-(int)(((float)I2C_RD_Buf[i]-p3)*4/(max-min)*255); bleu=0;}
+
+x =(int)(i%16/2);
+y= (int)(i/16);
+fprintf(fp, "<rect fill=\"rgb(%i,%i,%i)\" x=\"%i\" y=\"%i\" width=\"1\" height=\"1\" />\n",rouge,vert,bleu,x,y);
+}
+fprintf(fp, "</svg>");
+fclose(fp);
 }

@@ -3,25 +3,11 @@
 #include <unistd.h>
 
 
-main() {
-	system("stty -F /dev/ttyO1 9600");
-	FILE* uart;
-	
-	uart = fopen("/dev/ttyO1", "w");
-	fprintf(uart, "av\n");
-	fclose(uart);
-	sleep(4);
-	uart = fopen("/dev/ttyO1", "w");
-	fprintf(uart, "st\n");
-	fclose(uart);
+main(int argc, const char* argv[]) {
 
-	sleep(1);
+	FILE* uart;
 	uart = fopen("/dev/ttyO1", "w");
-	fprintf(uart, "bw\n");
-	fclose(uart);
-	sleep(4);
-	uart = fopen("/dev/ttyO1", "w");
-	fprintf(uart, "st\n");
+	fprintf(uart, "%s\n",argv[1]);
 	fclose(uart);
 
 }

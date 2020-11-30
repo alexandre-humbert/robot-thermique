@@ -1,6 +1,6 @@
 CC = /sec/buildroot/output/host/usr/bin/arm-linux-gcc
 
-all: /targetfs/usr/local/bin/ultrason /targetfs/usr/local/bin/moteur /targetfs/usr/local/bin/camera
+all: /targetfs/usr/local/bin/ultrason /targetfs/usr/local/bin/moteur /targetfs/usr/local/bin/camera /targetfs/usr/local/bin/interface
 
 /targetfs/usr/local/bin/moteur:	moteur
 	cp moteur /targetfs/usr/local/bin/
@@ -11,6 +11,9 @@ all: /targetfs/usr/local/bin/ultrason /targetfs/usr/local/bin/moteur /targetfs/u
 /targetfs/usr/local/bin/ultrason:	ultrason
 	cp ultrason /targetfs/usr/local/bin/
 
+/targetfs/usr/local/bin/interface:	interface
+	cp interface /targetfs/usr/local/bin/
+
 moteur:	moteur.c
 	$(CC) -o moteur moteur.c
 
@@ -19,3 +22,6 @@ camera:	camera.c
 
 ultrason:	ultrason.c
 	$(CC) -o ultrason ultrason.c
+
+ultrason:	interface.c
+	$(CC) -o interface interface.c
