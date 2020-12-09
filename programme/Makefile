@@ -1,27 +1,32 @@
 CC = /sec/buildroot/output/host/usr/bin/arm-linux-gcc
 
-all: /targetfs/usr/local/bin/ultrason /targetfs/usr/local/bin/moteur /targetfs/usr/local/bin/camera /targetfs/usr/local/bin/interface
+all: /targetfs/usr/local/bin/robot
 
-/targetfs/usr/local/bin/moteur:	moteur
-	cp moteur /targetfs/usr/local/bin/
 
-/targetfs/usr/local/bin/camera:	camera
-	cp camera /targetfs/usr/local/bin/
+/targetfs/usr/local/bin/robot:	build/robot
+	cp build/robot /targetfs/usr/local/bin/
 
-/targetfs/usr/local/bin/ultrason:	ultrason
-	cp ultrason /targetfs/usr/local/bin/
 
-/targetfs/usr/local/bin/interface:	interface
-	cp interface /targetfs/usr/local/bin/
 
-moteur:	moteur.c
-	$(CC) -o moteur moteur.c
 
-camera:	camera.c
-	$(CC) -o camera camera.c
+build/robot: build/robot.o build/moteur.o build/camera.o build/ultrason.o
+	$(CC) -o build/robot build/robot.o build/moteur.o build/camera.o build/ultrason.o
 
-ultrason:	ultrason.c
-	$(CC) -o ultrason ultrason.c
 
-interface:	interface.c
-	$(CC) -o interface interface.c
+
+
+build/robot.o:	robot.c
+	$(CC) -c -o build/robot.o robot.c
+
+build/moteur.o:	moteur.c moteur.h
+	$(CC) -c -o build/moteur.o moteur.c
+
+build/camera.o:	camera.c camera.h
+	$(CC) -c -o build/camera.o camera.c
+
+build/ultrason.o:	ultrason.c ultrason.h
+	$(CC) -c -o build/ultrason.o ultrason.c
+
+
+clean:
+	rm build/*

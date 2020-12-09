@@ -1,21 +1,17 @@
-#include <linux/i2c-dev.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-#define I2C_PERIPH "/dev/i2c-1" //Peripheric name in /dev
-#define ADDR 0x68 //Peripheric address
-#define MAX_BUFF_SIZE 128
-#define NB_PIXELS 64
-#define TAILLE_MATRICE 8
-#define TAILLE_TEMP_SUM 8
-#define I2C_PERIPH2 "/dev/i2c-2" //Peripheric name in /dev
-#define ADDR_SRF02 0x70 //Peripheric address
+#include "moteur.h"
+#include "ultrason.h"
+#include "camera.h"
 
 
-main() {
+main(int argc, const char* argv[]) {
+
+	FILE* uart;
+	if(argc >1){
+	uart = fopen("/dev/ttyO1", "w");
+	fprintf(uart, "%s\n",argv[1]);
+	fclose(uart);
+	}
+
 	int i;
 	int i2cFile;
 	int flag, value;
@@ -122,7 +118,7 @@ p3=31*4;
 // p2 = min + (max -min)/2;
 // p3 = min + 3*(max -min)/4;
 // Generer une image
-FILE* fp;
+
 int bleu, vert, rouge;
 int x,y;
 x=0;
