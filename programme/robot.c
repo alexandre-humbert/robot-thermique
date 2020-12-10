@@ -3,15 +3,18 @@
 #include "camera.h"
 main()
 {
+	char* commande_en_cours = "st"; //stock la commande en cours pour ne pas relancer la même commande en boucle .. de base, st
 	int i2c1file;
 	i2c1_init(&i2c1file); //On passe le paramètre par référence.
 	int i2c2file;
 	i2c2_init(&i2c2file); //on passe par référénce
-	int etat = 1; //avancer
+
+
 	unsigned char I2C1_WR_Buf[MAX_BUFF_SIZE_WR]; // Buffer donnees envoyees
 	unsigned char I2C1_RD_Buf[MAX_BUFF_SIZE_RD]; // Buffer donnees recues
 	float temp_amb; // Température ambiante
-	commande_robot("av");
+	int etat = 0; //définis l'état du moteur.
+	//commande_robot("av"); si décommenter, mettre l'état à 1.
 	int x = 0;
 	while(x<300)
 	{
@@ -29,26 +32,38 @@ main()
 		/* CODE MOTEUR */
 		if(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=15) //On approche pas à + de 15 cm de la source de chaleur
 		{
-			commande_robot("st");
+			commande_robot("st", ancienne_commande);
+			ancienne_commmande = "st"; //mis à jour de la nouvelle commande
 			etat=0; //temporaire : robot arreter 
 		}
 		/*moteur : commande_robot(const char* nom_commande) avec nom de commande : "av", etc */
-		else if (etat==0)
-		{
-			commande_robot("av");
-			 etat = 1;
-		}
 
-		if (etat==1 && cible >=0){
-			if (cible <3){
-			commande_robot("fr");
+		else if (etat==0) //le robot était arrêté car présence d'un objet devant lui à 15cm. Ici on le redémarre.
+		{
+			if(cible >=0) //On vérifie qu'une cible est présente. Via l'indice de la colonne la plus chaude.
+			{
+				if(cible == 0)
+				{
+					commande_robot("ga", ancienne_commande); //tourne à gauche.
+				}
+				else if (cible <3)
+				{
+					commande_robot("fr", ancienne_commande); //tourne à gauche.
+				}
+				else if (cible <5)
+				{
+					commande_robot("av", ancienne_commande); // tout droit.
+				}
+				else if cible ==7)
+				{
+					commande_robot("dr", ancienne_commande); // tourne à droite
+				}
+				else if (cible <8)
+				{
+					commande_robot("fl", ancienne_commande); // tourne à droite
+				}
 			}
-			else if (cible <5){
-			commande_robot("av");
-			}
-			if (cible <8){
-			commande_robot("fl");
-			}
+			 etat = 1; //on repasse l'état à 1
 		}
 		
 
@@ -57,3 +72,12 @@ main()
 		close(i2c1file); //fermeture de l'i2c1
 		close(i2c2file); //fermeture de l'i2c2	
 }     
+
+
+
+
+
+
+
+
+
