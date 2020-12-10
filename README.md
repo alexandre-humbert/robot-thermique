@@ -6,10 +6,10 @@ Le robot doit suivre une personne grâce à un capteur thermique.
   - [x] Liaison UART entre la carte beagle Bone et la carte Teensy
   - [x] Acquérir une image de la matrice thermique et l'afficher
   - [x] Déterminer la position de l'objet le plus chaud sur une image.
-  - [ ] Le robot peut suivre une personne
-  - [ ] Le robot ne s'approche pas à plus de 15 cm
-  - [ ] Le robot ne percute pas d'obstacle
-  - [ ] Le robot uutilise plusieurs capteurs pour un meilleur suivi
+  - [x] Le robot peut suivre une personne
+  - [x] Le robot ne s'approche pas à plus de 15 cm
+  - [x] Le robot ne percute pas d'obstacle
+  - [ ] Le robot utilise plusieurs capteurs pour un meilleur suivi
   
   ## Matériel
    * Une carte BeagleBone Black
