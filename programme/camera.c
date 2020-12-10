@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include "camera.h"
+#define DEBUG 0 //commenter pour enlever tous les printf.
 void i2c1_init(int* i2cFile)
 {
 	int flag;
@@ -61,7 +62,7 @@ int indice_chaleur(char* rd,float temp_amb) //retourne l'indice du tableau de la
 	}
 
 	int max_temp = 0; // int qui retourne l'indice de la colonne la plus chaude !
-	float val_max_temp=0;
+	float val_max_temp=0.0;
 	for (i = 0;i<TAILLE_TEMP_SUM;i++)
 	{
 	    if (temp_sum[i]>val_max_temp)
@@ -81,7 +82,11 @@ int indice_chaleur(char* rd,float temp_amb) //retourne l'indice du tableau de la
 
 	printf("L'indice de la colonne la plus chaude est %i, valeur = %f \n", max_temp, val_max_temp);*/
 	// Trouver la temperature minimale et la temperature maximale.
-	if (val_max_temp < 1.04*temp_amb){
+	val_max_temp = val_max_temp / (4*8); // 4 car 0.25 précision et 8 car huit valeurs dans une colonne
+	#ifdef DEBUG
+		printf("Valeur moyenne de la colonne la plus chaude : %f \n", val_max_temp);
+	#endif
+	if (val_max_temp < COEFF_TEMP*temp_amb){
 	max_temp = -1;
 	}
 	return max_temp;

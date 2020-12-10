@@ -8,6 +8,7 @@
 #define NB_PIXELS 64
 #define TAILLE_MATRICE 8
 #define TAILLE_TEMP_SUM 8
+#define COEFF_TEMP 1.04
 void i2c1_init(int *i2cFile);
 void get_image(int i2cfile, char* rd, char* wr );
 void affiche_image(char* rd);
