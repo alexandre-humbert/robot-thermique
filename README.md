@@ -10,6 +10,7 @@ Le robot doit suivre une personne grâce à un capteur thermique.
   - [x] Le robot ne s'approche pas à plus de 15 cm
   - [x] Le robot ne percute pas d'obstacle
   - [ ] Le robot utilise plusieurs capteurs pour un meilleur suivi
+  - [ ] Documentation
   
   ## Matériel
    * Une carte BeagleBone Black
