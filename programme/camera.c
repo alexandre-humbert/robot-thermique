@@ -38,7 +38,7 @@ void affiche_image(char* rd) //im correspond à I2C_RD_Buf
 	}
 }
 
-int indice_chaleur(char* rd,float temp_amb) //retourne l'indice du tableau de la zone la plus chaude entre 0 et 7
+int indice_chaleur(char* rd,float temp_amb, float* sum_tab) //retourne l'indice du tableau de la zone la plus chaude entre 0 et 7
 {			    //im correspond à I2C_RD_Buf
 
 	float temp_sum[TAILLE_TEMP_SUM];
@@ -63,8 +63,11 @@ int indice_chaleur(char* rd,float temp_amb) //retourne l'indice du tableau de la
 
 	int max_temp = 0; // int qui retourne l'indice de la colonne la plus chaude !
 	float val_max_temp=0.0;
+	*sum_tab = 0; //Valeur qui nous sert à stocker la totalité des valeurs du tableau.
+//On en a besoin pour savoir si on est assez proche du monsieur pour considérer que c'est lui l'obstacle ou alors si c'est vraiment un obstacle.
 	for (i = 0;i<TAILLE_TEMP_SUM;i++)
 	{
+	    *sum_tab = temp_sum[i] + *sum_tab;
 	    if (temp_sum[i]>val_max_temp)
 	    {
 		max_temp = i;
@@ -72,7 +75,9 @@ int indice_chaleur(char* rd,float temp_amb) //retourne l'indice du tableau de la
 	    }
 	}
 
-
+	#ifdef DEBUG
+		printf("\n SOMME TABLEAU : %f \n", *sum_tab);
+	#endif
 	//val_max_temp = val_max_temp*0.25/TAILLE_TEMP_SUM;
 
 	/*if(val_max_temp>26)
@@ -84,9 +89,9 @@ int indice_chaleur(char* rd,float temp_amb) //retourne l'indice du tableau de la
 	// Trouver la temperature minimale et la temperature maximale.
 	val_max_temp = val_max_temp / (4*8); // 4 car 0.25 précision et 8 car huit valeurs dans une colonne
 	#ifdef DEBUG
-		printf("Valeur moyenne de la colonne la plus chaude : %f \n", val_max_temp);
+		printf("Valeur max colonne : %f \n", val_max_temp);
 	#endif
-	if (val_max_temp < COEFF_TEMP*temp_amb){
+	if (val_max_temp < 24){
 	max_temp = -1;
 	}
 	return max_temp;
@@ -159,7 +164,3 @@ int min_image(char* I2C_RD_Buf)
 		}
 	}
 }
-
-
-
-
