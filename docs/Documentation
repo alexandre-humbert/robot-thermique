@@ -1,0 +1,2 @@
+fichier .ino : à ouvrir avec arduino, ainsi que teensyduino.
+Mettre tous les fichiers dans le dossier librairies d’Arduino pour qu’il les trouve quand on les appelle avec <>. (motor.h, interface.h coder.h, controle.h)
