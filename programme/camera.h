@@ -12,7 +12,7 @@
 void i2c1_init(int *i2cFile);
 void get_image(int i2cfile, char* rd, char* wr );
 void affiche_image(char* rd);
-int indice_chaleur(char* rd,float temp_amb);
+int indice_chaleur(char* rd,float temp_amb, float* sum_tab);
 float get_temp_amb(int i2cFile, char* rd, char* wr);
 void gen_image(char* I2C_RD_Buf,int max, int min);
 int max_image(char* I2C_RD_Buf);
