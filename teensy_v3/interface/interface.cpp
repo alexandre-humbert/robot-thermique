@@ -56,6 +56,9 @@ void inter_cmde(String str)
 	else if (cmde.equals("ga")) consigne_v1_v2(SpeedParam/2,SpeedParam) ;
 	else if (cmde.equals("ad")) consigne_v1_v2(-SpeedParam,-SpeedParam/2) ;
 	else if (cmde.equals("ag")) consigne_v1_v2(-SpeedParam/2,-SpeedParam) ;
+	else if (cmde.equals("tg")) consigne_v1_v2(-SpeedParam/2,0) ; //TEST : tourne sur lui même vers la gauche (moteur inversé)
+	else if (cmde.equals("td")) consigne_v1_v2(0,-SpeedParam/2) ; //TEST : tourne sur lui même vers la droite (moteur inversé)
+	  
   }
 
  // New commands
