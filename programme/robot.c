@@ -5,30 +5,31 @@
 main()
 {
 	unsigned char ancienne_commande[2]="st"; //stock la commande en cours pour ne pas relancer la même commande en boucle .. de base, st
+	
+	/* Initialisation caméra */
 	int i2c1file;
 	i2c1_init(&i2c1file); //On passe le paramètre par référence.
-	int i2c2file;
-	i2c2_init(&i2c2file); //on passe par référénce
-
-
 	unsigned char I2C1_WR_Buf[MAX_BUFF_SIZE_WR]; // Buffer donnees envoyees
 	unsigned char I2C1_RD_Buf[MAX_BUFF_SIZE_RD]; // Buffer donnees recues
+	
+	/* initialisation ultrason */
+	int i2c2file;
+	i2c2_init(&i2c2file); //on passe par référénce
+	unsigned char I2C2_WR_Buf[MAX_BUFF_SIZE];
+	unsigned char I2C2_RD_Buf[MAX_BUFF_SIZE];
+
 	float temp_amb; // Température ambiante
-	int x = 0;
+	
 	while(1)
 	{
-		x++;
-		/* initialisation CAMERA */
+		/* Récupération température ambiante + image du capteur thermique + l'indice de la colonne la plus chaude : */
 		temp_amb = get_temp_amb(i2c1file, I2C1_RD_Buf, I2C1_WR_Buf); // Acquisition de la tempréature ambiante
 		get_image(i2c1file, I2C1_RD_Buf, I2C1_WR_Buf); //Les tableaux sont passés par référence pour qu'ils soient modifiés dans la fonction 
 		int cible = indice_chaleur(I2C1_RD_Buf,temp_amb); 	/* retourne l'indice de la colonne la plus chaud */
+		
 		#ifdef DEBUG
 			printf("cible : %i , température ambiante : %f \n", cible, temp_amb);
 		#endif
-		/* initialisation ultrason */
-		unsigned char I2C2_WR_Buf[MAX_BUFF_SIZE];
-		unsigned char I2C2_RD_Buf[MAX_BUFF_SIZE];
-
 
 		/* CODE MOTEUR */
 		if(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=15) //On approche pas à + de 15 cm de la source de chaleur
@@ -41,6 +42,7 @@ main()
 		{
 			if(cible >=0) //On vérifie qu'une cible est présente. Via l'indice de la colonne la plus chaude.
 			{
+				/* On a inversé les commandes suite à un problème technique en marche avant. (Les moteurs sont actuellement inversés) */
 				if(cible == 0)
 				{
 					commande_robot("ad", ancienne_commande); //tourne à gauche.
