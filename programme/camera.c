@@ -43,13 +43,13 @@ int indice_chaleur(char* rd,float temp_amb, float* sum_tab) //retourne l'indice 
 
 	float temp_sum[TAILLE_TEMP_SUM];
 	int i;
-	for (i = 0;i<TAILLE_TEMP_SUM;i++) //boucle initialisation tableau à 0
+	for (i = 0;i<TAILLE_TEMP_SUM;i++) //boucle initialisation tableau à sa 1ère valeur
 	{
-	    temp_sum[i] = 0;
+	    temp_sum[i] = (float)rd[2*i];
 	}
 
 
-	for (i = 0; i<TAILLE_TEMP_SUM;i++) // calcul de la somme de chacune des colonnes de l'image
+	for (i = 1; i<TAILLE_TEMP_SUM;i++) // calcul de la somme de chacune des colonnes de l'image
 	{
 	    temp_sum[0]=(float)rd[16*i+0]+temp_sum[0];
 	    temp_sum[1]=(float)rd[16*i+2]+temp_sum[1];
@@ -75,9 +75,9 @@ int indice_chaleur(char* rd,float temp_amb, float* sum_tab) //retourne l'indice 
 	    }
 	}
 
-	#ifdef DEBUG
+	/*#ifdef DEBUG
 		printf("\n SOMME TABLEAU : %f \n", *sum_tab);
-	#endif
+	#endif*/
 	//val_max_temp = val_max_temp*0.25/TAILLE_TEMP_SUM;
 
 	/*if(val_max_temp>26)
@@ -88,11 +88,20 @@ int indice_chaleur(char* rd,float temp_amb, float* sum_tab) //retourne l'indice 
 	printf("L'indice de la colonne la plus chaude est %i, valeur = %f \n", max_temp, val_max_temp);*/
 	// Trouver la temperature minimale et la temperature maximale.
 	val_max_temp = val_max_temp / (4*8); // 4 car 0.25 précision et 8 car huit valeurs dans une colonne
-	#ifdef DEBUG
-		printf("Valeur max colonne : %f \n", val_max_temp);
-	#endif
-	if (val_max_temp < 24){
+	
+
+	if (val_max_temp < 23.2)
+	{
 	max_temp = -1;
+	}
+	else
+	{
+	#ifdef DEBUG
+		printf("Valeur moyenne colonne : %f \n", val_max_temp);
+	#endif
+	#ifdef DEBUG
+		printf("indice : %i \n", max_temp);
+	#endif
 	}
 	return max_temp;
 }
