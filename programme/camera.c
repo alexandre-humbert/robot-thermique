@@ -90,7 +90,7 @@ int indice_chaleur(char* rd,float temp_amb, float* sum_tab) //retourne l'indice 
 	val_max_temp = val_max_temp / (4*8); // 4 car 0.25 précision et 8 car huit valeurs dans une colonne
 	
 
-	if (val_max_temp < 23.2)
+	if (val_max_temp < temp_amb * 1.04)
 	{
 	max_temp = -1;
 	}
