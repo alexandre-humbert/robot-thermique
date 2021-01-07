@@ -132,7 +132,7 @@ main()
 			
 			cibles[stock_cible[0]+1] = cibles[stock_cible[0]+1] - 1; //décremente la valeur de la cible la plus ancienne
 		
-		for (i=0; i<6;i++)
+		for (i=0; i<NB_MOYENNAGE +1;i++)
 		{
 			//on décale tout le tableau qui stock les cibles vers la gauche (la valeur d'indice 0 est la plus ancienne donc on peut la virer)
 			stock_cible[i] = stock_cible[i+1];
