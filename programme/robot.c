@@ -10,13 +10,13 @@ void contourne_droite(unsigned char* ancienne_commande)
 	usleep(1000000); //0.5sec
 	//On va essayer de le contourner par la droite 
 	commande_robot("av", ancienne_commande); // on recul un peu
-	usleep(1000000); //0.5sec
+	usleep(1100000); //0.5sec
 	commande_robot("st", ancienne_commande); // on recul un peu
 	usleep(1000000); //0.5sec
 
 
 	commande_robot("td", ancienne_commande); // pivote à droite
-	usleep(2500000); //2sec
+	usleep(1000000); //2sec
 	commande_robot("st", ancienne_commande); // on recul un peu
 	usleep(1000000); //0.5sec
 
@@ -26,7 +26,7 @@ void contourne_droite(unsigned char* ancienne_commande)
 	usleep(1000000); //0.5sec
 
 	commande_robot("tg", ancienne_commande); //pivote à gauche : soucis avec cette commande, la roue va à la vitesse max alors que j'ai /2 sur la teensy. Sur la commande pivote droite il n'y a pas ce soucis ...
-	usleep(1350000); //2sec
+	usleep(1150000); //2sec
 	commande_robot("st", ancienne_commande); // on recul un peu
 	usleep(1000000); //0.5sec
 
@@ -69,13 +69,14 @@ main()
 			temp_amb = get_temp_amb(i2c1file, I2C1_RD_Buf, I2C1_WR_Buf); // Acquisition de la tempréature ambiante
 			get_image(i2c1file, I2C1_RD_Buf, I2C1_WR_Buf);
 			cible = indice_chaleur(I2C1_RD_Buf,temp_amb, &sum_tab);
-			#ifdef DEBUG
+
+			if(sum_tab<6580)//Si la camera voit un objet mais loin (6249 a été determiné via des tests.
+			{
+				while(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=25 && sum_tab<6580)
+				{
+								#ifdef DEBUG
 				printf("somme tableau : %f \n", sum_tab);
 			#endif
-			if(sum_tab<6249)//Si la camera voit un objet mais loin (6249 a été determiné via des tests.
-			{
-				while(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=15)
-				{
 					/* SEQUENCE CONTOURNEMENT OBJET */
 					contourne_droite(ancienne_commande);
 					/*FIN SEQUENCE*/
@@ -87,7 +88,7 @@ main()
 			else //si la camera détecte un objet chaud très près alors la somme est élevée
 			{
 				commande_robot("st", ancienne_commande); // on stop les moteurs
-				while(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=15)
+				while(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=25)
 				{
 					//Sans la boucle on prend le risque de partir dans la séquence pour contourner un objet
 					usleep(1500000); //1,5 seconde entre chaque tentative
@@ -97,7 +98,7 @@ main()
 		}
 
 		/* CODE MOTEUR */
-		else if(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=15) //On approche pas à + de 15 cm de la source de chaleur
+		else if(mesure_distance(i2c2file, I2C2_WR_Buf, I2C2_RD_Buf)<=25) //On approche pas à + de 15 cm de la source de chaleur
 		{
 			commande_robot("st", ancienne_commande);
 			obstacle = 1; //Un obstacle est présent
@@ -105,22 +106,22 @@ main()
 		/*moteur : commande_robot(const char* nom_commande) avec nom de commande : "av", etc */
 
 		else
-		{	max_cible =0;
+		{	/*max_cible =0;
 			for(i=0;i<9;i=i+1)
 			{
 				cibles[i] =  0;
 
-			}
-			for(i=0;i<5;i=i+1)
+			}*/
+			/*for(i=0;i<5;i=i+1)
 			{
-				usleep(30000);
+				usleep(30000);*/
 				temp_amb = get_temp_amb(i2c1file, I2C1_RD_Buf, I2C1_WR_Buf); // Acquisition de la tempréature ambiante
 				get_image(i2c1file, I2C1_RD_Buf, I2C1_WR_Buf);
 				cible = indice_chaleur(I2C1_RD_Buf,temp_amb, &sum_tab);
-				cibles[cible+1] =  cibles[cible+1] + 1;
+				//cibles[cible+1] =  cibles[cible+1] + 1;
 
-			}
-			for(i=0;i<9;i=i+1)
+			//}
+			/*for(i=0;i<9;i=i+1)
 			{
 				if(cibles[i] >= max_cible)
 				{
@@ -128,7 +129,7 @@ main()
 					cible = i-1;
 				}
 
-			}
+			}*/
 			#ifdef DEBUG
 			printf("Cible après moyennage : %i \n", cible);
 			#endif
@@ -137,24 +138,24 @@ main()
 			{
 				if(cible == 0)
 				{
-					commande_robot("ad", ancienne_commande); //tourne à gauche.
+					commande_robot("td", ancienne_commande); //tourne à gauche.
 				}
-				else if (cible <3)
+				else if (cible <2)
 				{
-					commande_robot("br", ancienne_commande); //tourne à gauche.
+					commande_robot("td", ancienne_commande); //tourne à gauche.
 				}
-				else if (cible <5)
+				else if (cible <6)
 				{
 					commande_robot("ar", ancienne_commande); // tout droit.
 				}
 				else if (cible ==7)
 				{
-					commande_robot("ag", ancienne_commande); // tourne à droite
+					commande_robot("tg", ancienne_commande); // tourne à droite
 				}
 				else if (cible <8)
 				{
 								
-					commande_robot("bl", ancienne_commande); // tourne à droite
+					commande_robot("tg", ancienne_commande); // tourne à droite
 				}
 			}
 			else
