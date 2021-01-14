@@ -9,12 +9,36 @@
 #define TAILLE_MATRICE 8
 #define TAILLE_TEMP_SUM 8
 #define COEFF_TEMP 1.04
-void i2c1_init(int *i2cFile);
-void get_image(int i2cfile, char* rd, char* wr );
-void affiche_image(char* rd);
-int indice_chaleur(char* rd,float temp_amb, float* sum_tab);
-float get_temp_amb(int i2cFile, char* rd, char* wr);
-void gen_image(char* I2C_RD_Buf,int max, int min);
-int max_image(char* I2C_RD_Buf);
-int min_image(char* I2C_RD_Buf);
+#include <time.h>
+
+typedef struct Camera Camera;
+struct Camera
+        {
+		int i2cFile;
+		float img[NB_PIXELS];
+		float temp_amb;
+		float sum_pix;
+		float max;
+		float min;
+		int cible;
+		int indice;
+		int* cibles;
+		int moyenne;
+		int debut_tab;
+		double timer;
+		struct timespec t1;
+		struct timespec t2;
+        };
+        
+void camera_init(Camera* camera,int moyenne);
+void camera_get_image(Camera* camera);
+void camera_afficher_image(Camera* camera);
+void camera_indice_chaleur(Camera* camera);
+void camera_get_temp_amb(Camera* camera);
+void camera_gen_image(Camera* camera);
+void camera_max_image(Camera* camera);
+void camera_min_image(Camera* camera);
+void camera_update(Camera* camera);
+void camera_moyenne(Camera* camera);
+void camera_settimer(Camera* camera,double timer);
 #endif
