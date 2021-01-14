@@ -7,7 +7,6 @@
 #define DEBUG 0 //commenter pour enlever tous les printf.
 
 
-
 main()
 {	
 	Camera camera;
@@ -30,19 +29,22 @@ main()
 		camera_update(&camera);
 		moteur_update(&moteur);
 		
-		
-		
-		if (moteur.obstacle==1){
-			moteur_contourne_droite(&moteur);
-			moteur.obstacle=1;
-		}
-		
 		if (ultrason.distance <15 && ultrason.distance >0)
 		{
 			moteur_commande(&moteur,"st");
-			moteur.num_etape=-1; // On annule le parcours
+			if(camera.sum_pix > 8*camera.temp_amb*COEFF_TEMP) //COEFF_temp est défini dans camera.h ; ; ; On regarde si la somme de la moyenne de chaque colonne (= 8 colonnes x val_moy[colonne]) est supérieur à 8 * la température ambiante + un seuil. 
+			{//Si on détecte un obstacle ET que la camera trouve que la chaleur devant son capteur est très élevé (objet chaud devant lui) alors on en déduit que c'est la source devant lui.
+				moteur.num_etape=-1; // On annule le parcours
+				usleep(1000000);
+			}
+			else //sinon c'est un obstacle et on doit le contourner
+			{
+				//Contournement obstacle : 
+				moteur_contourne_droite(&moteur); //Le parcours sera activé dans cette fonction
+			}
 		}
-		else{
+		else
+		{
 			if(moteur.num_etape==-1) //On vérifie qu'il n'y a pas de parcours en cours.
 			{
 				if(camera.cible == -1)
@@ -67,14 +69,14 @@ main()
 				}
 				else if (camera.cible < 8)
 				{
-							
 					moteur_commande(&moteur,"dr"); // tourne à droite
 				}
 			}
 		}
-
-
 	}
+}
+
+		
 	
 	moteur_commande(&moteur,"st");
 	/*Fermeture des I2C : */
