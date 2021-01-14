@@ -32,10 +32,9 @@ main()
 		if (ultrason.distance <15 && ultrason.distance >0)
 		{
 			moteur_commande(&moteur,"st");
-			if(camera.sum_pix > 8*camera.temp_amb*COEFF_TEMP) //COEFF_temp est défini dans camera.h ; ; ; On regarde si la somme de la moyenne de chaque colonne (= 8 colonnes x val_moy[colonne]) est supérieur à 8 * la température ambiante + un seuil. 
+			if(camera.sum_pix > 8*8*camera.temp_amb*COEFF_TEMP) //COEFF_temp est défini dans camera.h ; ; ; On regarde si la somme de la moyenne de chaque colonne (= 8 colonnes x val_moy[colonne]) est supérieur à 8 * la température ambiante + un seuil. 
 			{//Si on détecte un obstacle ET que la camera trouve que la chaleur devant son capteur est très élevé (objet chaud devant lui) alors on en déduit que c'est la source devant lui.
 				moteur.num_etape=-1; // On annule le parcours
-				usleep(1000000);
 			}
 			else //sinon c'est un obstacle et on doit le contourner
 			{
