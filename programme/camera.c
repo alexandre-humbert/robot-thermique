@@ -85,9 +85,11 @@ void camera_indice_chaleur(Camera* camera) //retourne l'indice du tableau de la 
 	}
 	
 	int max_temp = 0; //indice de la colonne la plus chaude
+	camera->sum_pix = 0; //Initialisation de la somme de toutes les colonnes.
 	float val_max_temp = temp_sum[0];
 	for (i = 0;i<TAILLE_MATRICE;i++)
 	{
+	    camera->sum_pix = temp_sum[i] + camera->sum_pix; //Somme de toutes les colonnes.
 	    if (temp_sum[i]>val_max_temp)
 	    {
 		max_temp = i;
