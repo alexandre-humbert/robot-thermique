@@ -35,20 +35,20 @@ void moteur_commande(Moteur* moteur,const char* input) {
 
 void moteur_contourne_droite(Moteur* moteur)
 {	
-	strncpy((moteur->parcours[0]).commande,"av",10);
-	(moteur->parcours[0]).duree = 2;
-	strncpy((moteur->parcours[1]).commande,"st",10);
-	(moteur->parcours[1]).duree = 2;
-	strncpy((moteur->parcours[2]).commande,"ar",10);
-	(moteur->parcours[2]).duree = 2;
-	strncpy((moteur->parcours[3]).commande,"st",10);
-	(moteur->parcours[3]).duree = 2;
-	strncpy((moteur->parcours[4]).commande,"dr",10);
-	(moteur->parcours[4]).duree = 2;
-	strncpy((moteur->parcours[5]).commande,"st",10);
-	(moteur->parcours[5]).duree = 2;
+	strncpy((moteur->parcours[0]).commande,"st",10);
+	(moteur->parcours[0]).duree = 1.0;
+	strncpy((moteur->parcours[1]).commande,"ar",10);
+	(moteur->parcours[1]).duree = 1.1;
+	strncpy((moteur->parcours[2]).commande,"td",10);
+	(moteur->parcours[2]).duree = 1.0;
+	strncpy((moteur->parcours[3]).commande,"av",10);
+	(moteur->parcours[3]).duree = 1.1;
+	strncpy((moteur->parcours[4]).commande,"tg",10);
+	(moteur->parcours[4]).duree = 1.0;
+	strncpy((moteur->parcours[5]).commande,"av",10);
+	(moteur->parcours[5]).duree = 0.75;
 	strncpy((moteur->parcours[6]).commande,"st",10);
-	(moteur->parcours[6]).duree = 2;
+	(moteur->parcours[6]).duree = 0.5;
 	
 
 
