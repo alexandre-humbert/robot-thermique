@@ -42,10 +42,12 @@ main()
 			moteur_commande(&moteur,"st"); //On coupe les moteurs
 			
 			/* On regarde si la somme de toute la matrice est très élevé. Ceci nous permet de savoir si l'obstacle est un vrai obstacle OU la source de chaleur */
-			if(camera.sum_pix > 8*8*camera.temp_amb*COEFF_TEMP) // COEFF_TEMP est défini dans camera.h
+			if(camera.sum_pix > (6*8*30 + 2*8*camera.temp_amb)) //On regarde si la somme des pixels est supérieur à 6 colonnes de 8 valeurs = 30 + 2 colonnes de 8 valeurs de temp_amb pour savoir si la source est proche ou pas 
 			{ //C'est la source de chaleur devant :
 				moteur.num_etape=-1; // Donc on annule le parcours en cours et on attend que la source avance :
-				while(ultrason.distance <15) //Tant qu'on a quelque chose devant à moins de 15 cm
+				moteur_reset_parcours(moteur); //Et on reset le parcours précédent
+				
+				while(ultrason.distance <15 && ultrason.distance >0) //Tant qu'on a quelque chose devant à moins de 15 cm
 					{
 						ultrason_update(&ultrason); //On met à jour l'ultrason
 					}
@@ -53,13 +55,28 @@ main()
 			else //sinon c'est un obstacle et on doit le contourner
 			{
 				//Contournement obstacle : 
-				moteur_contourne_droite(&moteur); //Le parcours 'Contourne_droite' sera parametré et activé dans cette fonction
+				if(moteur.obstacle ==0) //Si on a pas déjà rencontré d'obstacle :
+				{
+					moteur_contourne_droite(&moteur); //Le parcours 'Contourne_droite' sera parametré et activé dans cette fonction
+					moteur.obstacle = 1; //compte le nombre d'obstacle qu'on a rencontré
+				}
+				else if (moteur.num_etape <= 2) //Les deux premières commandes sont st et ar. C'est pour éviter de relancer contourne droite alors qu'on a paas bougé
+				{
+					
+				}
+				else //on rencontre un nouvel obstacle après les deux premières commandes.
+				{
+					moteur_reset_parcours(&moteur);
+					moteur_contourne_droite(&moteur); //Le parcours 'Contourne_droite' sera parametré et activé dans cette fonction
+					moteur.obstacle = 1; //compte le nombre d'obstacle qu'on a rencontré
+				}
+
 			}
 		}
 		/* Si on a rien à moins de 15 cm devant : */
 		else
 		{
-			if(moteur.num_etape==-1) //On vérifie qu'il n'y ait pas de parcours déjà en cours.
+			if(moteur.num_etape==-1 && moteur.obstacle == 0) //On vérifie qu'il n'y ait pas de parcours déjà en cours.
 			{
 				if(camera.cible == -1) //Si on ne trouve aucune cible
 				{
