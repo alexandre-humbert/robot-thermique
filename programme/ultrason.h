@@ -9,12 +9,13 @@
 typedef struct Ultrason Ultrason;
 struct Ultrason
 	{
-		int i2cFile;
-		int distance;
-		int luminosite;
+		int i2cFile; // Stock le retour de la fonction open() pour l'i2c
+		int distance; // Stock distance entre robot et l'objet devant
+		int luminosite; // Stock luminosité de l'environnement ou le robot est
 		double timer;
-		struct timespec t1;
-		struct timespec t2;
+		struct timespec t1; // temps 1
+		struct timespec t2; // temps 1
+	// Les deux temps permettre de créer un chronomètre
 };
 
 
