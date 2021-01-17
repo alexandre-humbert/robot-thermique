@@ -38,6 +38,9 @@ void moteur_commande(Moteur* moteur,const char* input)
 
 void moteur_contourne_droite(Moteur* moteur)
 {	
+	/* Reset du parcours précédent */
+	moteur_reset_parcours(moteur);
+	
 	/* Parcours pour contourner l'obstacle : */
 	/* stop pendant 1 secondes */
 	strncpy((moteur->parcours[0]).commande,"st",10); 
@@ -91,7 +94,7 @@ void moteur_reset_parcours(Moteur* moteur)
 		strncpy((moteur->parcours[i]).commande,"",10);
 		(moteur->parcours[i]).duree =0;
 	}
-	moteur->obstacle = 0;
+
 }
 
 void moteur_update(Moteur* moteur)
@@ -113,6 +116,7 @@ void moteur_update(Moteur* moteur)
 		if (moteur->num_etape >10 || ((moteur->parcours[moteur->num_etape]).duree==0 && moteur->num_etape !=-1))
 		{
 			moteur_reset_parcours(moteur);
+			moteur->obstacle = 0;
 		}
 		clock_gettime(CLOCK_MONOTONIC,&(moteur->t1)); //MAJ temps 1
 		#if DEBUG
