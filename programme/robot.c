@@ -57,18 +57,18 @@ main()
 				//Contournement obstacle : 
 				if(moteur.obstacle ==0) //Si on a pas déjà rencontré d'obstacle :
 				{
+					moteur.obstacle += 1; //compte le nombre d'obstacle qu'on a rencontré
 					moteur_contourne_droite(&moteur); //Le parcours 'Contourne_droite' sera parametré et activé dans cette fonction
-					moteur.obstacle = 1; //compte le nombre d'obstacle qu'on a rencontré
 				}
+				
 				else if (moteur.num_etape <= 2) //Les deux premières commandes sont st et ar. C'est pour éviter de relancer contourne droite alors qu'on a paas bougé
-				{
-					
-				}
+				{}
+				
 				else //on rencontre un nouvel obstacle après les deux premières commandes.
 				{
-					moteur_reset_parcours(&moteur);
+					moteur.obstacle += 1; //compte le nombre d'obstacle qu'on a rencontré
 					moteur_contourne_droite(&moteur); //Le parcours 'Contourne_droite' sera parametré et activé dans cette fonction
-					moteur.obstacle = 1; //compte le nombre d'obstacle qu'on a rencontré
+					
 				}
 
 			}
