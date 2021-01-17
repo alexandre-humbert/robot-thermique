@@ -7,22 +7,22 @@
 struct etape // strcuture composée d'une commande et d'une durée
 	{
 		char commande[10];
-		double duree;
+		double duree; 
 	};
 
 
-typedef struct Moteur Moteur;
+typedef struct Moteur Moteur; //Raccourci pour écrire directement Moteur au lieu de struct Moteur.
 struct Moteur
 	{
-		FILE* uartFile;
-		char commande[10];
-		int vitesse;
-		int obstacle;
+		FILE* uartFile; // ouverture fichier uart
+		char commande[10]; // Stock des commandes
+		int vitesse; // 
+		int obstacle; // 0 : pas d'obstacle, 1 : il y a un obstacle.
 		double timer;
-		struct timespec t1;
-		struct timespec t2;
-		int num_etape;
-		struct etape parcours[10]; // tableau d'étapes
+		struct timespec t1; // Stock un temps
+		struct timespec t2; // Stock un temps
+		int num_etape; // Stock le numéro d'étape du parcours.
+		struct etape parcours[10]; // Stock un parcours. Notamment pour le contournement d'obstacle.
 
 	};
 	
