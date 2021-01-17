@@ -12,28 +12,31 @@
 void camera_init(Camera* camera,int moyenne)
 {
 	int flag;
-	camera->i2cFile = open(I2C_PERIPH, O_RDWR);
+	camera->i2cFile = open(I2C_PERIPH, O_RDWR); //ouverture i2c
 	if (camera->i2cFile < 0) { perror("Erreur ouverture du bus I2C"); exit(1); }
+	
 	flag = ioctl(camera->i2cFile, I2C_SLAVE_FORCE, ADDR);
 	if (flag < 0) { perror("Erreur adresse camera I2C"); exit(1); }
+	
 	camera->debut_tab=0; // On initialise l'indice du tableau tournant à 0
-	camera->moyenne=moyenne;
+	camera->moyenne=moyenne; //Nombre d'itérations pour le moyennage
 	camera->cibles=(int*) malloc(camera->moyenne*sizeof(int));
 	int i;
 	for (i=0;i<camera->moyenne;i++){camera->cibles[i]=-1;} // On initialise le tableau tournant avec des -1 (pas de mouvement)
 	camera->timer=0.1; // Timer à 100 ms soit 10 HZ
-	camera_get_image(camera);
-	camera_get_temp_amb(camera);
-	camera_min_image(camera);
-	camera_max_image(camera);
+	
+	camera_get_image(camera); //MAJ tableau qui contient la matrice
+	camera_get_temp_amb(camera); // MAJ température ambiente
+	camera_min_image(camera); // Min tableau
+	camera_max_image(camera); // Max tableau
 	usleep(1);
-	camera_indice_chaleur(camera);
+	camera_indice_chaleur(camera); 
 	clock_gettime(CLOCK_MONOTONIC,&(camera->t1)); // On initialise t1
 }
 
 void camera_get_image(Camera* camera)
 {	
-	unsigned char img_hex[2* NB_PIXELS];
+	unsigned char img_hex[2* NB_PIXELS]; //La matrice renvoie deux fois plus de valeur que celle qu'on veut (8*8)
 	unsigned char wr[1];
 	int flag;
 	wr[0] = 0x80; //adresse du registre du premier pixel
@@ -41,25 +44,31 @@ void camera_get_image(Camera* camera)
 	if (flag != 1) { perror("Erreur requete I2C camera"); exit(1); }
 	flag = read(camera->i2cFile, img_hex, 128);
 	if (flag != 128) { perror("Erreur lecture I2C camera"); }
-	camera->sum_pix = 0;
+	
+	camera->sum_pix = 0; //Somme tableau = 0
 	int i;
-	for (i = 0; i < NB_PIXELS; i++) {
-		if (img_hex[2 * i + 1] < 0x08) {
-			camera->img[i] = (256* (float)img_hex[2*i+1]+(float)img_hex[2*i])*0.25;
+	for (i = 0; i < NB_PIXELS; i++) 
+	{
+		if (img_hex[2 * i + 1] < 0x08) //Si la valeur est inférieure à 8
+		{
+			camera->img[i] = (256*(float)img_hex[2*i+1]+(float)img_hex[2*i])*0.25;
 		}
-		else {
-			camera->img[i] = (256 * (float)img_hex[2 * i + 1] + (float)img_hex[2 * i] -4096)*0.25;
+		else  //Si la valeur est supérieure à 8
+		{
+			camera->img[i] = (256*(float)img_hex[2*i+1] + (float)img_hex[2 * i] -4096)*0.25;
 		}
 		camera->sum_pix += camera->img[i];
 	}
 }
 
-void camera_afficher_image(Camera* camera) //im correspond à I2C_RD_Buf
+void camera_afficher_image(Camera* camera) 
 {
-
+	/* Affiche tableau en deux dimensions : 8*8. Il represente les températures que le capteur reçoit et correspnd à la vision du robot */
 	int i,j;
-	for (i=0;i<TAILLE_MATRICE;i++){
-		for (j=0;j<TAILLE_MATRICE;j++){
+	for (i=0;i<TAILLE_MATRICE;i++)
+	{
+		for (j=0;j<TAILLE_MATRICE;j++)
+		{
 			printf("%.1f " ,camera->img[TAILLE_MATRICE*i+j]);
 		}
 		printf("%s","\n");
@@ -118,7 +127,9 @@ void camera_get_temp_amb(Camera* camera)
 	if (flag != 1) { perror("Erreur requete I2C"); exit(1); }
 	flag = read(camera->i2cFile, rd, 2);
 	if (flag != 2) { perror("Erreur lecture I2C"); }
-	if (rd[1] < 0x08) {
+	/*  */
+	if (rd[1] < 0x08) 
+	{
 		camera->temp_amb = (256 * (float)rd[1] + (float)rd[0]) * 0.0625;
 	}
 	else {
@@ -132,13 +143,18 @@ void camera_moyenne(Camera* camera)
 	int temp=0;
 	int counter=0;
 	int i,j;
-	for (i=0;i<camera->moyenne;i++){
-		for (j=0;j<camera->moyenne;j++){
-			if (camera->cibles[j]==camera->cibles[i]){
+	
+	for (i=0;i<camera->moyenne;i++)
+	{
+		for (j=0;j<camera->moyenne;j++)
+		{
+			if (camera->cibles[j]==camera->cibles[i])
+			{
 				counter++;
 			}
 		}
-		if (counter>temp){
+		if (counter>temp)
+		{
 			temp=counter;
 			camera->cible=camera->cibles[i];
 		}
