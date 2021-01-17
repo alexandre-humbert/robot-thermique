@@ -91,6 +91,7 @@ void moteur_reset_parcours(Moteur* moteur)
 		strncpy((moteur->parcours[i]).commande,"",10);
 		(moteur->parcours[i]).duree =0;
 	}
+	moteur->obstacle = 0;
 }
 
 void moteur_update(Moteur* moteur)
