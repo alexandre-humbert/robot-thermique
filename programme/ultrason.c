@@ -119,7 +119,7 @@ void ultrason_update(Ultrason* ultrason)
 		ultrason_mesure(ultrason); //Méthode qui regroupe toutes les méthodes nécessaires pour mettre à jour la distance et la luminosité.
 		clock_gettime(CLOCK_MONOTONIC,&(ultrason->t1)); //MAJ t1
 		#if DEBUG
-			printf("%i \n",ultrason->distance);
+			printf("Distance %i cm\n",ultrason->distance);
 		#endif
 	}
 }
