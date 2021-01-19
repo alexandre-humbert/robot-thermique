@@ -14,9 +14,6 @@ all: /targetfs/usr/local/bin/robot /targetfs/usr/local/bin/camera /targetfs/usr/
 
 /targetfs/usr/local/bin/moteur: build/moteur
 	cp build/moteur /targetfs/usr/local/bin/
-	
-/targetfs/usr/local/bin/interface: build/interface
-	cp build/interface /targetfs/usr/local/bin/
 
 
 build/robot: build/robot.o build/moteur.o build/camera.o build/ultrason.o
@@ -30,10 +27,6 @@ build/ultrason: build/ultrason_dbg.o build/ultrason.o
 
 build/moteur: build/moteur_dbg.o build/moteur.o
 	$(CC) -g -o build/moteur build/moteur_dbg.o build/moteur.o
-
-	
-build/interface: build/interface.o build/moteur.o build/camera.o build/ultrason.o
-	$(CC) -g -o build/interface build/interface.o build/moteur.o build/camera.o build/ultrason.o
 		
 
 build/robot.o:	robot.c
@@ -47,6 +40,7 @@ build/camera.o:	camera.c camera.h
 
 build/ultrason.o:	ultrason.c ultrason.h
 	$(CC) -c -o build/ultrason.o ultrason.c
+	
 
 build/camera_dbg.o: camera_dbg.c
 	$(CC) -c -o build/camera_dbg.o camera_dbg.c
@@ -56,9 +50,6 @@ build/ultrason_dbg.o: ultrason_dbg.c
 
 build/moteur_dbg.o: moteur_dbg.c
 	$(CC) -c -o build/moteur_dbg.o moteur_dbg.c
-	
-build/interface.o: interface.c
-	$(CC) -c -o build/interface.o interface.c
 
 clean:
 	rm build/*
