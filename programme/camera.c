@@ -204,7 +204,7 @@ void camera_gen_image(Camera* camera) // Affiche une image au format SVG
 	for (i=0;i<NB_PIXELS;i++){
 	// Choix couleur
 	if (camera->img[i] < camera->min){rouge=0; vert=0; bleu=255;}
-	if (camera->img[i] >= camera->min && camera->img[i] < p1){rouge=0; vert=(int)((camera->img[i]-camera->min)*4/((camera->max-camera->min)*255)); bleu=255;}
+	if (camera->img[i] >= camera->min && camera->img[i] < p1){rouge=0; vert = (int)((camera->img[i]-camera->min)*4/((camera->max-camera->min))*255); bleu=255;}
 	if (camera->img[i] >= p1 && camera->img[i] < p2){rouge=0; vert=255; bleu=255 - (int)((camera->img[i]-p1)*4/((camera->max-camera->min))*255);}
 	if (camera->img[i] >= p2 && camera->img[i] < p3){rouge= (int)((camera->img[i]-p2)*4/((camera->max-camera->min))*255); vert=255; bleu=0;}
 	if (camera->img[i] >= p3){rouge=255 ; vert=255-(int)((camera->img[i]-p3)*4/(camera->max-camera->min)*255); bleu=0;}
@@ -212,7 +212,7 @@ void camera_gen_image(Camera* camera) // Affiche une image au format SVG
 	x =(int)(i%8*10);
 	y= (int)(i/8*10);
 	printf("<rect fill=\"rgb(%i,%i,%i)\" x=\"%i\" y=\"%i\" width=\"10\" height=\"10\" />\n",rouge,vert,bleu,x,y);
-	printf("<text class=\"temp\" font-size=\"3\" class=\"test\" x=\"%i\" y=\"%i\">%0.2f</text>\n",x+1,y+5,camera->img[i]);
+	printf("<text class=\"temp\" font-size=\"3\" x=\"%i\" y=\"%i\">%0.2f</text>\n",x+1,y+5,camera->img[i]);
 	}
 	printf("</svg>");
 }
