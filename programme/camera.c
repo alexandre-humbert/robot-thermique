@@ -200,7 +200,7 @@ void camera_gen_image(Camera* camera) // Affiche une image au format SVG
 	p1 = camera->min + (camera->max - camera->min)/4;
 	p2 = camera->min + (camera->max - camera->min)/2;
 	p3 = camera->min + 3*(camera->max - camera->min)/4;
-	printf("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\">\n");
+	printf("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\" shape-rendering=\"crispEdges\">\n");
 	for (i=0;i<NB_PIXELS;i++){
 	// Choix couleur
 	if (camera->img[i] < camera->min){rouge=0; vert=0; bleu=255;}
