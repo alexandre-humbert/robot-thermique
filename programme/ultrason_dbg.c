@@ -1,10 +1,53 @@
 #include "ultrason.h"
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-void main(int argc, const char* argv[])
+int main(int argc, char* argv[])
 {
+
+	int mode, opt;
+	int gain, range;
+	gain = 15;
+	range = 7;
+	mode = 0;
+        while ((opt = getopt(argc, argv, "hwg:r:")) != -1) {
+            switch (opt) {
+            case 'h':
+                printf("Affiche les données du capteur ultrason\n");
+                printf("Options : \n");
+                printf("-w Affiche un texte formaté pour le web\n");
+                printf("-g Modifie le gain\n");
+                printf("-r Modifie la portée \n");
+                exit(EXIT_SUCCESS);
+                break;
+            case 'w':
+                mode = 1;
+                break;
+            case 'g':
+                gain = atoi(optarg);
+                break;
+            case 'r':
+                range = atoi(optarg);
+                break;
+            default:
+                fprintf(stderr, "Usage: %s [-w] [-g gain] [-r range] \n",
+                        argv[0]);
+                exit(EXIT_FAILURE);
+            }
+        }
+	
 	Ultrason ultrason;
-	ultrason_init(&ultrason);
-	printf("Distance : %i cm \n", ultrason.distance);
-	printf("Luminosté : %i \n", ultrason.luminosite);
+	ultrason_init(&ultrason,(char)range,(char)gain);
+	
+	if (mode==0){
+		printf("Distance : %i cm \n", ultrason.distance);
+		printf("Luminosité : %i \n", ultrason.luminosite);
+        }
+	else{
+		printf("<p>Distance : %i cm </p>\n", ultrason.distance);
+		printf("<p>Luminosité : %i </p>\n", ultrason.luminosite);
+	}
+	
+        exit(EXIT_SUCCESS);
 }
