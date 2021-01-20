@@ -26,12 +26,12 @@ Il est composé de 4 fichiers :
   
 ## Les programmes de débogage
   
-  ### moteur
-  Ce programme permet d'enoyer des commandes aux moteurs.    
-  Exemples:  
-    * "moteur av" permet d'envoyer la commande avancer.  
-    * "moteur av 1" permet d'envoyer la commande avancer à la vitesse 1.  
-  Se référer à la partie "Programme de pilotage des moteurs de la Teensy" de la documentation pour plus d'information sur les commandes.
+### moteur
+Ce programme permet d'enoyer des commandes aux moteurs.    
+Exemples:  
+  * "moteur av" permet d'envoyer la commande avancer.  
+  * "moteur av 1" permet d'envoyer la commande avancer à la vitesse 1.  
+Se référer à la partie "Programme de pilotage des moteurs de la Teensy" de la documentation pour plus d'information sur les commandes.
   
 ### camera
 Ce programme permet d'afficher une image de la caméra sous forme de matrice ainsi que la température ambiante et d'autres infromations issues de la caméra.    
