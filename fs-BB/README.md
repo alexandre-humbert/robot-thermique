@@ -7,5 +7,10 @@ Ce répertoire contient les fichiers à placer dans votre système de fichier de
    * Lanceurs des scripts au démarrage
     * /etc/init.d/rcS
     
-    ...
+   * Lanceur du serveur BOA
+    * /etc/init.d/S02boa
+    
+   * Lanceur du programme robot
+    * /etc/init.d/S03robot
+   
    
