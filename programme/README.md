@@ -48,7 +48,7 @@ Il dispose de plusieurs options :
   * -h pour afficher l'aide
   * -t pour ajouter un délai
   * -g pour changer le gain
-  * -r pour changer la ortée
+  * -r pour changer la portée
   
   
   # Changelog
