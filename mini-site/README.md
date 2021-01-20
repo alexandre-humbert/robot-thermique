@@ -12,3 +12,7 @@ Mini site hebergé sur la carte permettant de debogué le robot.
     * envoyer des commandes aux moteurs
     * la carte couleurs de la caméra thermique (tmin et tmax)
     
+ ### Installation :
+ Installez un seveur BOA (voir documentation)  
+ Placez ces fichiers sur la carte dans /var/www
+    
