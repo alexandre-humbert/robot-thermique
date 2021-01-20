@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<meta charset="utf8">
+<link rel="stylesheet" href="style.css">
+<script src="jquery-3.5.1.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Interface robot</title>
+<body>
+<div class="title">
+<h1> Robot à guidage thermique</h1></div>
+<h2> Page web de l'interface</h2>
+<h3> Affichage des capteurs</h3>
+<p id="etat_off"> Etat de l'acquisition : <span class="off"> arrêtée</span></p>
+<p id="etat_on"> Etat de l'acquisition : <span class="on"> en cours</span></p>
+<p> Attention : risque de conflit si le programme Robot est lancé. Stoppez d'abord le service S05robot par telnet.</p>
+<button onclick=start()>Lancer</button>
+<button onclick=stop()>Stopper</button>
+
+<h3> Contrôle des moteurs</h3>
+<div class="moteur" id="moteur">
+<div>
+<button onclick=avant_gauche()>&#8598</button>
+<button onclick=avancer()>&#8593</button>
+<button onclick=avant_droite()>&#8599</button>
+</div>
+<div>
+<button onclick=gauche()>&#8592</button>
+<button onclick=stopper()>&#10005</button>
+<button onclick=droite()>&#8594</button>
+</div>
+<div>
+<button onclick=arr_gauche()>&#8601</button>
+<button onclick=reculer()>&#8595</button>
+<button onclick=arr_droite()>&#8600</button>
+</div>
+</div>
+<div id="svg" class="svg"></div>
+<button id="btn_set" onclick=switch_mode()>Mode avancé</button>
+<div class="settings" id="settings"> 
+<div><div class="label"><label for="tmin"> Tmin </label></div><input id="tmin" type="range" min="0" max="50" step="1" onchange=update_values()><div class="label value"><span id="value_tmin"></span></div></div>
+<div><div class="label"><label for="tmax"> Tmax </label></div><input id="tmax" type="range" min="0" max="50" step="1" onchange=update_values()><div class="label value"><span id="value_tmax"></span></div></div>
+<div><div class="label"><label for="temp_auto">Auto </label></div><input type="checkbox" id="temp_auto" value="tempauto" checked><div class="label value"><span></span></div></div>
+<div><div class="label"><label for="fps"> FPS </label></div><input id="fps" type="range" min="1" max="5" step="1" onchange=update_values()><div class="label value"><span id="value_fps" ></span></div></div>
+<div><button class="mt" onclick=valider()>Valider</button></div>
+<div><button class="tsmall" onclick=switch_temp()>Afficher/Cacher températures</button></div>
+<div><div class="label cmd"><label for="cmd"> Commande moteur</label></div><input id="cmd" type="text"><div class="label value"><button class="small" onclick="envoyer_cmd()">Envoyer</button></div>
+</div>
+</body>
+</html>
+
+<script src="script.js"></script>
+
+
+
+

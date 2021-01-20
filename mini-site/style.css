@@ -1,0 +1,88 @@
+body{
+background-color : white;
+font-size : 2vw;
+text-align:center;
+}
+
+.title{
+width:80vw;
+border: 5px solid;
+border-radius : 2rem;
+margin:auto;
+
+}
+
+.svg{
+margin: auto;
+width:40vw;
+height:auto;
+margin-top:2vh;
+}
+
+button{
+border: 10px solid;
+border-radius: 2.5rem;
+font-size: 5vh;
+margin:0.1vw;
+}
+
+.tsmall{
+display:inline-block;
+font-size: 2vh;
+border: 2px solid;
+margin:0.5vw;
+}
+
+.small{
+border: 5px solid;
+border-radius: 1rem;
+font-size: 2vh;
+margin:0.5vw;
+
+}
+
+.off{
+color:red;
+}
+
+.on{
+color:green;
+}
+
+
+.moteur{
+display:flex;
+flex-direction:column;
+}
+
+.settings{
+display:flex;
+flex-direction:column;
+margin:auto;
+margin-top:2vh;
+width:50%;
+text-align:center;
+border: 5px solid;
+}
+
+.label{
+display:inline-block;
+text-align:right;
+margin-right:2vw;
+width:10vw;
+}
+
+.value{
+width:5vw;
+}
+.mt{
+margin-top:2vh;
+}
+
+.cmd{
+font-size: 2.5vh;
+width:35%;
+}
+
+
+
