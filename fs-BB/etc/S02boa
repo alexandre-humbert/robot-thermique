@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Start boa ....
+#
+
+start() {
+      printf "Starting boa: "
+      start-stop-daemon -S -q -m -b -p /var/run/boa.pid \
+			-x /usr/sbin/boa
+      [ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+	printf "Stopping boa: "
+	start-stop-daemon -K -q -p /var/run/boa.pid \
+			  -x /usr/sbin/boa
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
