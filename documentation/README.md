@@ -10,9 +10,9 @@ Ensuite **en root:**
 Effacez la table de partition :
 ``` dd if=/dev/zero of=/dev/sdd bs=1M count=1 ```  
 Créez une nouvelle table : ``` sfdisk -H 255 -S 63 /dev/sdd << EOF ```  
-``` 0,1,c,* ```
-``` ,2 ```  
-``` EOF ```
+``` 0,1,c,* ```  
+``` ,2 ```   
+``` EOF ```  
 Ensuite créez le partion de boot :  
 ``` mkfs.vfat /dev/sdd1 -n boot ```
 Montez cette partition :  
