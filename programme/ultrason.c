@@ -22,7 +22,7 @@ void ultrason_init(Ultrason* ultrason,char range, char gain)
 	unsigned char I2C_WR_Buf[1];
 	unsigned char I2C_RD_Buf[2];
 	I2C_WR_Buf[0] = 0x02; // registre du ranging
-	I2C_WR_Buf[1] = range; // 07*4.3 = 30.1 cm
+	I2C_WR_Buf[1] = range; 
 	
 	/* on essaye d'écrire dans le registre d'adresse 0x02 pour changer le range */
 	flag = write(ultrason->i2cFile, I2C_WR_Buf, 2);
@@ -101,7 +101,7 @@ void ultrason_mesure(Ultrason* ultrason)
 {
 	/* Méthode qui regroupe toutes les méthodes nécessaires pour mettre à jour la distance et la luminosité. */
 	ultrason_requete_mesure(ultrason);
-	usleep(5000);
+	usleep(100000);
 	ultrason_lecture_distance(ultrason);
 	ultrason_lecture_luminosite(ultrason);
 
@@ -115,13 +115,15 @@ void ultrason_update(Ultrason* ultrason)
 	/* c'est pour ne pas trop solliciter le capteur ultrason. En effet, c'est une onde qui se propage et qui revient, donc il a fallu prendre en compte ceci et ne pas renvoyer d"onde avant que l'ancienne ne soit revenue. */
 	
 	if ((((double)((ultrason->t2).tv_sec)+(double)((ultrason->t2).tv_nsec)*1.0e-9) - ((double)((ultrason->t1).tv_sec)+(double)((ultrason->t1).tv_nsec)*1.0e-9))>ultrason->timer)
-	{
-		ultrason_mesure(ultrason); //Méthode qui regroupe toutes les méthodes nécessaires pour mettre à jour la distance et la luminosité.
+	{	ultrason_lecture_luminosite(ultrason); // On lit les mesures effectuées
+		ultrason_lecture_distance(ultrason);
+		ultrason_requete_mesure(ultrason); // On demande une nouvelle mesure
 		clock_gettime(CLOCK_MONOTONIC,&(ultrason->t1)); //MAJ t1
 		#if DEBUG
 			printf("Distance %i cm\n",ultrason->distance);
 		#endif
 	}
+		
 }
 
 void ultrason_settimer(Ultrason* ultrason, double timer){ultrason->timer=timer;} //Choix du temps entre chaque update

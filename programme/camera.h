@@ -1,6 +1,5 @@
 #ifndef H_CAMERA
 #define H_CAMERA
-
 #define I2C_PERIPH "/dev/i2c-1" //Bus de la camera
 #define ADDR 0x68 //Adresse de la camera
 #define MAX_BUFF_SIZE_RD 128 

@@ -23,7 +23,6 @@ struct Moteur
 		struct timespec t2; // Stock un temps
 		int num_etape; // Stock le numéro d'étape du parcours.
 		struct etape parcours[10]; // Stock un parcours. Notamment pour le contournement d'obstacle.
-
 	};
 	
 
@@ -36,8 +35,10 @@ void moteur_droite(Moteur* moteur);
 void moteur_gauche(Moteur* moteur);
 void moteur_stop(Moteur* moteur);
 void moteur_contourne_droite(Moteur* moteur);
+void moteur_rotation(Moteur* moteur);
 void moteur_settimer(Moteur* moteur, double timer);
 void moteur_reset_parcours(Moteur* moteur);
-void moteur_update(Moteur* update);
+void moteur_update(Moteur* moteur);
+void moteur_changer_vitesse(Moteur* moteur,int vitesse);
 
 #endif

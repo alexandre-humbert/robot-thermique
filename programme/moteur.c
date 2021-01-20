@@ -13,6 +13,7 @@ void moteur_init(Moteur* moteur)
 	strncpy(moteur->commande,"",10); //Initialisation tableau de commande à des commandes vides.
 	moteur_reset_parcours(moteur); //Initialisation parcours à des commandes vides ET à une durée nulle.
 	moteur->obstacle=0; //pas d'obstacles.
+	moteur->vitesse = 4; // Initilisation à vitesse 4, la plus rapide
 }
 
 void moteur_commande(Moteur* moteur,const char* input) 
@@ -76,6 +77,29 @@ void moteur_contourne_droite(Moteur* moteur)
 
 }
 
+void moteur_rotation(Moteur* moteur)
+{
+	/* Reset du parcours précédent */
+	moteur_reset_parcours(moteur);
+	
+	moteur_changer_vitesse(moteur,3); // On met une vitesse pas trop élevée
+	/* stop pendant 1 secondes */
+	strncpy((moteur->parcours[0]).commande,"st",10); 
+	(moteur->parcours[0]).duree = 3;
+	
+	/* On pivote pendant 3 secondes */
+	strncpy((moteur->parcours[1]).commande,"pd",10);
+	(moteur->parcours[1]).duree = 3;
+	
+	// On s'arrête
+	strncpy((moteur->parcours[6]).commande,"st",10);
+	(moteur->parcours[2]).duree = 0.1;
+	
+	// On lance le parcours
+	moteur->num_etape=0;
+	moteur->timer = (moteur->parcours[moteur->num_etape]).duree; //MAJ timer
+}
+
 void ssleep(float t)
 {
 	/* Fonction sleep() maison */
@@ -135,5 +159,12 @@ void moteur_stop(Moteur* moteur){moteur_commande(moteur,"st");}
 
 void moteur_settimer(Moteur* moteur, double timer){moteur->timer = timer;} //Set le timer !
 
+void moteur_changer_vitesse(Moteur* moteur,int vitesse){
+	
+	if (moteur->vitesse!=vitesse){
+		moteur->vitesse=vitesse;
+		fprintf(moteur->uartFile,"sp %i\n",vitesse);
+	}
+}
 
 
