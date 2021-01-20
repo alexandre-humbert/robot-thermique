@@ -1,6 +1,6 @@
 # Documentation
 
-### Creéation d'une carte SD
+### Création d'une carte SD
 ##### Sur Linux à partir de Targetfs
 Trouvez quel périphérique correspond à votre carte SD avec :  
 ``` ls /dev ```
@@ -28,7 +28,7 @@ Montez cette partition puis placez-vous dans le répértoire copiez votre systè
 ``` cp -r /targetfs/* ./ ```
   
   
-##### Sur Windows à partir du fichier
+##### Sur Windows à partir du fichier image
 Il est possible de simplement installer l'image disponible sur ce git avec un logiciel comme [Win32Disk](https://sourceforge.net/projects/win32diskimager/)
 Télécharger sdcard.img puis chosissez ce fichier dazns le logiciel, séléctionnez votre carte SD et cliquez sur "Write".
 ***
