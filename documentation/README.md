@@ -7,8 +7,8 @@
 Téléchargez et installez  le programm eArduinoIDE depuis ce site : https://www.arduino.cc/en/software  
 Téléchargez et installez le programme TeensyDuino depuis ce site : https://www.pjrc.com/teensy/td_download.html  
 Choissisez le programme que vous souhaitez installer sur la carte :
-    * moteur_teensy si vous ne souhaitez pas avoir d'asservissement
-    * teensy_v3 si vous souhaitez avoir un asservissement
+      * moteur_teensy si vous ne souhaitez pas avoir d'asservissement
+      * teensy_v3 si vous souhaitez avoir un asservissement
 Ouvrez ce programme dans ArduinoIDE  
 Branchez la Teensy, puis dans choisissez Teensy 3.2/3.1 dans Outils -> Type de carte et choissisez votre port dans Outils -> Port  
 Ensuite cliquez sur la flèche pour téléverser.
