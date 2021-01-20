@@ -8,10 +8,11 @@ int main(int argc, char* argv[])
 
 	int mode, opt;
 	int gain, range;
-	gain = 15;
-	range = 7;
+	gain = 31;
+	range = 255;
 	mode = 0;
-        while ((opt = getopt(argc, argv, "hwg:r:")) != -1) {
+	int delay=0;
+        while ((opt = getopt(argc, argv, "hwg:r:t:")) != -1) {
             switch (opt) {
             case 'h':
                 printf("Affiche les données du capteur ultrason\n");
@@ -19,6 +20,7 @@ int main(int argc, char* argv[])
                 printf("-w Affiche un texte formaté pour le web\n");
                 printf("-g Modifie le gain\n");
                 printf("-r Modifie la portée \n");
+                printf("-t Aoute un delai en secondes\n");
                 exit(EXIT_SUCCESS);
                 break;
             case 'w':
@@ -30,6 +32,9 @@ int main(int argc, char* argv[])
             case 'r':
                 range = atoi(optarg);
                 break;
+            case 't':
+                delay = atoi(optarg);
+                break;
             default:
                 fprintf(stderr, "Usage: %s [-w] [-g gain] [-r range] \n",
                         argv[0]);
@@ -37,6 +42,7 @@ int main(int argc, char* argv[])
             }
         }
 	
+	sleep(delay);
 	Ultrason ultrason;
 	ultrason_init(&ultrason,(char)range,(char)gain);
 	

@@ -7,7 +7,7 @@
 #include <errno.h>
 #include "camera.h"
 #include <time.h>
-#define DEBUG 1 
+#define DEBUG 0
 
 void camera_init(Camera* camera,int moyenne)
 {
@@ -214,7 +214,7 @@ void camera_gen_image(Camera* camera) // Affiche une image au format SVG
 	printf("<rect fill=\"rgb(%i,%i,%i)\" x=\"%i\" y=\"%i\" width=\"10\" height=\"10\" />\n",rouge,vert,bleu,x,y);
 	printf("<text class=\"temp\" font-size=\"3\" x=\"%i\" y=\"%i\">%0.2f</text>\n",x+1,y+5,camera->img[i]);
 	}
-	printf("</svg>");
+	printf("</svg>\n");
 }
 
 void camera_max_image(Camera* camera)
