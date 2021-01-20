@@ -12,5 +12,9 @@ Ce répertoire contient les fichiers à placer dans votre système de fichier de
     
    * Lanceur du programme robot
      * /etc/init.d/S03robot
+   * Le fichier issue pour modifier le message de bienvenue au démarrage
+     * /etc/issue
+   * Le fichier profile avec le PATH modifié
+     * /etc/profile
    
    
