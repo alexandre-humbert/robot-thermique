@@ -3,7 +3,7 @@
 ### Création d'une carte SD
 ##### Sur Linux à partir de Targetfs
 Trouvez quel périphérique correspond à votre carte SD avec :  
-``` ls /dev ```
+``` ls /dev ```  
 Sur la VM, ce périphérique sera surement */dev/sdd*  
 Les instructions sivantes sont données pour un périphérique **sdd**. Adaptez les commandes si le votre est différent.
 Ensuite **en root:**  
