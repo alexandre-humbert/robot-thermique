@@ -24,7 +24,7 @@ Il est composé de 4 fichiers :
   
   
   
-  ## Les programmes de débogage
+## Les programmes de débogage
   
   ### moteur
   Ce programme permet d'enoyer des commandes aux moteurs.    
@@ -35,19 +35,19 @@ Il est composé de 4 fichiers :
   ### camera
   Ce programme permet d'afficher une image de la caméra sous forme de matrice ainsi que la température ambiante et d'autres infromations issues de la caméra.    
   Il dispose de plusieurs options :  
-    * -h pour afficher l'aide
-    * -t pour ajouter un délai
-    * -m pour chosir une temprérature minimale
-    * -M pour chosir une tempréature maximale
-    * -W pour afficher une image au format SVG
+     * -h pour afficher l'aide
+     * -t pour ajouter un délai
+     * -m pour chosir une temprérature minimale
+     * -M pour chosir une tempréature maximale
+     * -W pour afficher une image au format SVG
     
-  ### ultrason
+### ultrason
   Ce programme permet d'afficher la distance et la luminosité mesurées par le capteur ultrason.
   Il dispose de plusieurs options :  
-    * -h pour afficher l'aide
-    * -t pour ajouter un délai
-    * -g pour changer le gain
-    * -r pour changer la ortée
+     * -h pour afficher l'aide
+     * -t pour ajouter un délai
+     * -g pour changer le gain
+     * -r pour changer la ortée
   
   
   # Changelog
