@@ -145,9 +145,9 @@ void loop(){
     }
     if (cmd.indexOf("sp")>=0){ // Changer la vitesse
       if(nb_arg==1){
-        if (arg1==1){vitesse=120;} // Vitesse 1
-        else if (arg1==2){vitesse=120;} // Vitesse 2
-        else if (arg1==3){vitesse=150;} // Vitesse 3
+        if (arg1==1){vitesse=130;} // Vitesse 1
+        else if (arg1==2){vitesse=150;} // Vitesse 2
+        else if (arg1==3){vitesse=170;} // Vitesse 3
         else if (arg1==4){vitesse=255;} // Vitesse 4
         else{
           vitesse=arg1;
