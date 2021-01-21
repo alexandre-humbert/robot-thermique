@@ -158,7 +158,7 @@ void loop(){
       if(nb_arg==1){rayon=arg1;}
     }
     
-    p1 = c1; p2 =(int)(c2*0.55+10); // Pas d'asserviseement donc les puissances sont égales aux consignes avec seulement une correction sur un moteur
+    p1 = c1; p2 =(int)(c2*0.75+10); // Pas d'asserviseement donc les puissances sont égales aux consignes avec seulement une correction sur un moteur
     Moteur(); // On appelle la fonction moteur pour mettre à jour les puissances
   }
 }
