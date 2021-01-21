@@ -17,6 +17,7 @@ Il est composé de 4 fichiers :
   Il contient le code pour mesurer une distance avec le capteur à ultrason
   
   ## robot.c
+  Il contient le programme principale.  
   Il permet de piloter le robot en fonction des données des capteurs.
   
   ***
