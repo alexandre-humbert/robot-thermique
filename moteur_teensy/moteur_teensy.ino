@@ -1,5 +1,5 @@
 #include <Encoder.h>
-#define SERIAL Serial // Mettre Serial pour communiquer en USB avec un PC et Serial1 pour communiquer en UART avec la BeagleBone
+#define SERIAL Serial1 // Mettre Serial pour communiquer en USB avec un PC et Serial1 pour communiquer en UART avec la BeagleBone
 IntervalTimer monTimer;
 Encoder CodeurDroit(5, 6); 
 Encoder CodeurGauche(8, 7);
