@@ -1,4 +1,4 @@
-# Documentation
+# Documentation (lire le fichier PDF pour une doc complète)
 ### Préparation de la machine virtuelle
 #### Installation et configuration du partage NFS
 #### Installation et configurationde Buildroot
