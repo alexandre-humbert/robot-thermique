@@ -4,7 +4,7 @@
 #include "moteur.h"
 #include <string.h>
 
-#define DEBUG 0 //0 desactive et 1 active
+#define DEBUG 1//0 desactive et 1 active
 
 void moteur_init(Moteur* moteur)
 {
@@ -49,23 +49,22 @@ void moteur_contourne_droite(Moteur* moteur)
 	
 	/* recule pendant 1.1 secondes */
 	strncpy((moteur->parcours[1]).commande,"ar",10);
-	(moteur->parcours[1]).duree = 1.1;
+	(moteur->parcours[1]).duree = 1.0;
 	
 	/* pivote à droite pendant 1 secondes */
 	strncpy((moteur->parcours[2]).commande,"td",10);
-	(moteur->parcours[2]).duree = 1.0;
-	
+	(moteur->parcours[2]).duree = 0.5;
 	/* avance pendant 1.1 secondes */
 	strncpy((moteur->parcours[3]).commande,"av",10);
 	(moteur->parcours[3]).duree = 1.1;
 	
 	/* pivote à gauche pendant 1 secondes */
 	strncpy((moteur->parcours[4]).commande,"tg",10);
-	(moteur->parcours[4]).duree = 1.0;
+	(moteur->parcours[4]).duree = 1.5;
 	
 	/* avance pendant 0.75 secondes */
 	strncpy((moteur->parcours[5]).commande,"av",10);
-	(moteur->parcours[5]).duree = 0.75;
+	(moteur->parcours[5]).duree = 1.0;
 	
 	/* stop pendant 0.5 secondes */
 	strncpy((moteur->parcours[6]).commande,"st",10);
@@ -82,18 +81,15 @@ void moteur_rotation(Moteur* moteur)
 	/* Reset du parcours précédent */
 	moteur_reset_parcours(moteur);
 	
-	moteur_changer_vitesse(moteur,3); // On met une vitesse pas trop élevée
+	moteur_changer_vitesse(moteur,2); // On met une vitesse pas trop élevée
 	/* stop pendant 1 secondes */
 	strncpy((moteur->parcours[0]).commande,"st",10); 
-	(moteur->parcours[0]).duree = 3;
+	(moteur->parcours[0]).duree = 0.15;
 	
 	/* On pivote pendant 3 secondes */
-	strncpy((moteur->parcours[1]).commande,"pd",10);
-	(moteur->parcours[1]).duree = 3;
+	strncpy((moteur->parcours[1]).commande,"pg",10);
+	(moteur->parcours[1]).duree = 1.0;
 	
-	// On s'arrête
-	strncpy((moteur->parcours[6]).commande,"st",10);
-	(moteur->parcours[2]).duree = 0.1;
 	
 	// On lance le parcours
 	moteur->num_etape=0;

@@ -37,32 +37,36 @@ main()
 		moteur_update(&moteur);
 		
 		/* On adapte la vitesse selon la distance entre le robot et l'obstacle ou la personne */
-		if (ultrason.distance >=50 || ultrason.distance==0){moteur_changer_vitesse(&moteur,4); }
-		if (ultrason.distance <50 && ultrason.distance >=40){ moteur_changer_vitesse(&moteur,3); }
-		if (ultrason.distance <40 && ultrason.distance >=30){ moteur_changer_vitesse(&moteur,2); }
-		if (ultrason.distance <30 && ultrason.distance >=15){ moteur_changer_vitesse(&moteur,1); }
+		if (moteur.obstacle ==0){
+		 if (ultrason.distance >=50 || ultrason.distance==0){moteur_changer_vitesse(&moteur,4); }
+		 if (ultrason.distance <50 && ultrason.distance >=40){ moteur_changer_vitesse(&moteur,3); }
+		 if (ultrason.distance <40 && ultrason.distance >=30){ moteur_changer_vitesse(&moteur,2); }
+		 if (ultrason.distance <30 && ultrason.distance >=15){ moteur_changer_vitesse(&moteur,1); }
+		}
 		
 		/* Si on trouve un objet à moins de 15 cm du robot : */
 		if (ultrason.distance <15 && ultrason.distance >0)
-		{
-			moteur_commande(&moteur,"st"); //On coupe les moteurs
+		{	
+			#if DEBUG
+			printf("sum pix : %f ;; seuil : %f \n", camera.sum_pix, 5*8*27.85 + 3*8*camera.temp_amb); //25.25
+			#endif
+			 //On coupe les moteurs
 			
 			/* On regarde si la somme de toute la matrice est très élevé. Ceci nous permet de savoir si l'obstacle est un vrai obstacle OU la source de chaleur */
 			if(camera.sum_pix > (6*8*30 + 2*8*camera.temp_amb)) //On regarde si la somme des pixels est supérieur à 6 colonnes de 8 valeurs = 30 + 2 colonnes de 8 valeurs de temp_amb pour savoir si la source est proche ou pas 
 			{ //C'est la source de chaleur devant :
 				moteur.num_etape=-1; // Donc on annule le parcours en cours et on attend que la source avance :
 				moteur_reset_parcours(&moteur); //Et on reset le parcours précédent
-				
-			//	while(ultrason.distance <15 && ultrason.distance >0) //Tant qu'on a quelque chose devant à moins de 15 cm
-			//		{
-			//			ultrason_update(&ultrason); //On met à jour l'ultrason
-			//		}
+				moteur.obstacle = 0;
+				while(ultrason.distance <15 && ultrason.distance >0){ultrason_update(&ultrason); ssleep(1);}
+				ssleep(1); //permet d'éviter que le robot pense qu'on est un obstacle quand on commence à s'éloigner..		
 			}
 			else //sinon c'est un obstacle et on doit le contourner
 			{
 				//Contournement obstacle : 
 				if(moteur.obstacle ==0) //Si on a pas déjà rencontré d'obstacle :
-				{
+				{	moteur_changer_vitesse(&moteur,3);
+					moteur_commande(&moteur,"st");
 					moteur.obstacle += 1; //compte le nombre d'obstacle qu'on a rencontré
 					moteur_contourne_droite(&moteur); //Le parcours 'Contourne_droite' sera parametré et activé dans cette fonction
 				}
@@ -72,6 +76,7 @@ main()
 				
 				else //on rencontre un nouvel obstacle après les deux premières commandes.
 				{
+					moteur_commande(&moteur,"st");
 					moteur.obstacle += 1; //compte le nombre d'obstacle qu'on a rencontré
 					moteur_contourne_droite(&moteur); //Le parcours 'Contourne_droite' sera parametré et activé dans cette fonction
 					
@@ -86,8 +91,8 @@ main()
 			{
 				if(camera.cible == -1) //Si on ne trouve aucune cible
 				{
-					moteur_commande(&moteur,"st"); //on s'arrete.
-					//moteur_rotation(&moteur); // On fait une rotation après 3s
+					//moteur_commande(&moteur,"st"); //on s'arrete.
+					moteur_rotation(&moteur); // ou on tourne pour trouver quelqu'un
 				}
 				
 				/*Sinon, on a trouvé une cible. L'indice correspond à la colonne ou l'on a détecté la source de chaleur. Donc on se déplace en fonction de cet indice : */

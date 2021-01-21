@@ -2,13 +2,13 @@
 ## Description
 Ce programme en langage C permet au robot de suivre une personne avec une matrice thermique.  
 Il est composé de 4 fichiers : 
-  * le fichier moteur.c
-  * le fichier camera.c
-  * le fichier ultrason.c
-  * le fichier robot.c
+  * La fichier moteur.c
+  * la fichier camera.c
+  * La fichier ultrason.c
+  * la fichier robot.c
   
  ## moteur.c
- Il contient tout le code permettant de communiquer avec la Teensy en UART. Elle permet d'avancer, reculer, s'arrêter.
+ Il contient tout le code permettant de communiquer avec la Teensy en UART. Elle permet d'avancer, reculer, s'arrêter ..
  
  ##  caméra.c
  Il contient le code pour acquérir une image depuis la matrice thermique en I2C et le code pour exploiter ces données.
@@ -17,7 +17,7 @@ Il est composé de 4 fichiers :
   Il contient le code pour mesurer une distance avec le capteur à ultrason
   
   ## robot.c
-  Il contient le programme principale.  
+  Il contient un objet de chacune des classes.  
   Il permet de piloter le robot en fonction des données des capteurs.
   
   ***
