@@ -9,10 +9,10 @@ Des coefficients ont été ajoutés pour supprimer la différence de vitesse ent
     * "av n m" permet d'avancer à la vitesse n pour la roue droite et m pour la roue gauche.
     * "av 1", "av 2", "av 3" et "av 4" permettent d'avancer à des vitesses prédéfinies.
   * **"st"** pour s'arrêter
-  * **"av"** pour reculer
-    * "av n" permet de reculer à la vitesse n.
-    * "av n m" permet de reculer à la vitesse n pour la roue droite et m pour la roue gauche.
-    * "av 1", "av 2", "av 3" et "av 4" permettent de reculer à des vitesses prédéfinies.
+  * **"ar"** pour reculer
+    * "ar n" permet de reculer à la vitesse n.
+    * "ar n m" permet de reculer à la vitesse n pour la roue droite et m pour la roue gauche.
+    * "ar 1", "ar 2", "ar 3" et "ar 4" permettent de reculer à des vitesses prédéfinies.
    * **"dr"** pour avancer vers la droite
    * **"ga"** pour avancer vers la gauche
    * **"ad"** pour reculer vers la droite
