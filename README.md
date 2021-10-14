@@ -2,7 +2,7 @@
 ![Robot thermique](assets/photo.png)
 
 ## Vidéo
-![Robot thermique](assets/video.mp4)
+![Robot thermique](assets/video.gif)
 
 ### Télécharger la présentation : [PDF](assets/presentation.pdf)
 
