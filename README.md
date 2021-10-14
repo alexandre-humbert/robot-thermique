@@ -1,4 +1,11 @@
 # Le robot à guidage thermique
+![Robot thermique](assets/photo.png)
+
+## Vidéo
+![Robot thermique](assets/video.mp4)
+
+### Télécharger la présentation : [PDF](assets/presentation.pdf)
+
 ## Description
 Ce projet consiste à réaliser un OS Linux embarqué et un programme en C permettant à un robot de suivre un humain.
 Le suivi s'effectuera grâce à un capteur thermique 8x8. Le robot doit suivre l'humain en détectant sa chaleur et sans heurter d'obstacle.
